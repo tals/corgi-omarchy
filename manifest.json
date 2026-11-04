@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "corgi.computer",
+  "name": "Corgi",
+  "version": "0.1.0",
+  "author": "Tal Shiri",
+  "description": "Corgi agents and web links in your Omarchy bar",
+  "homepage": "https://corgi.computer",
+  "license": "MIT",
+  "kinds": ["bar-widget"],
+  "entryPoints": {
+    "barWidget": "qml-759317e09f0e/Widget.qml"
+  },
+  "barWidget": {
+    "displayName": "Corgi",
+    "description": "Live agent status, one-click navigation, and detected web links",
+    "category": "AI",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}

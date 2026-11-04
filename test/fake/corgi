@@ -1,0 +1,25 @@
+#!/bin/bash
+# Fake Corgi: `watch --json` re-prints the last line of the feed and then every
+# appended line, like the real watch prints once at start and then on change.
+# `list --json` reports two viewers while /tmp/scenario/viewer exists: viewer
+# 2, used last, whose process has no window, and viewer 1, the fake watch's
+# process, which has one through its parent (see the fake hyprctl). Without
+# it, it fails as Corgi does with no daemon.
+# `usage --json` prints /tmp/scenario/usage.json.
+case "${1:-}" in
+  watch)
+    echo "watch $* (release $(basename "$(dirname "$0")"))" >> /tmp/log/corgi.log
+    exec tail -n 1 -F /tmp/scenario/feed.jsonl 2>/dev/null ;;
+  list)
+    echo "$*" >> /tmp/log/corgi.log
+    [[ -f /tmp/scenario/viewer ]] || exit 1
+    printf '{"ok":true,"viewers":[{"id":2,"pid":999999,"active":9},{"id":1,"pid":%s,"active":5}]}\n' \
+      "$(pgrep -n -f 'tail -n 1 -F')" ;;
+  usage)
+    # One-shot, like the real `corgi usage --json`: the scenario's accounts,
+    # or what a stopped daemon answers.
+    echo "$*" >> /tmp/log/corgi.log
+    if [[ -f /tmp/scenario/usage.json ]]; then cat /tmp/scenario/usage.json; echo
+    else echo '{"running":false,"accounts":[]}'; fi ;;
+  *) echo "$*" >> /tmp/log/corgi.log ;;
+esac
