@@ -1,6 +1,6 @@
 //! Corgi's sidebar animations for the Omarchy panel: each agent row's activity
 //! glyph and the corgi on its second line, drawn by Corgi's own animation code
-//! and handed to QML as styled text. Corgi's build compiles it, with the
+//! and handed to QML as styled text. tools/build_corgi.ts compiles it, with the
 //! Corgi modules it imports as `@corgi/NAME`, into ES modules for Qt's engine:
 //! see HACKING.md. That engine has no BigInt literals or `Intl`, and builtins
 //! it lacks come from qml_shims.js.

@@ -64,12 +64,18 @@ source file (each starts with its path there), compiled for Qt's QML engine;
 `Card.qml` imports `corgi/motion.mjs`. Don't edit it here. `tools/motion.ts`
 is this plugin's entry into it, importing Corgi's modules as `@corgi/NAME`
 (`src/NAME.ts`), and `tools/qml_shims.js` fills in the builtins Qt's engine
-lacks, which Corgi's code may use only through it. To refresh `corgi/` after
-the animations or either file change, run this in a Corgi checkout:
+lacks, which Corgi's code may use only through it. Qt's engine has no BigInt
+literals and no `Intl`, so Corgi's source modules must stay free of both
+(their headers say so). To refresh `corgi/` after the animations or either
+file change, run this here, with a Corgi checkout:
 
 ```sh
-bun tools/omarchy_motion.ts <this checkout>/tools/motion.ts <this checkout>/qml-<hash>/corgi
+bun tools/build_corgi.ts --corgi <corgi checkout> [<out dir>]
 ```
 
-Then run `tools/rehash` and commit the result here. Only the files whose
-source changed differ.
+It builds `tools/motion.ts` and each module it reaches into one ES module per
+file, resolving imports with the checkout's `package.json` browser stand-ins
+and compiling with the checkout's pinned TypeScript. The output goes to the
+manifest's `qml-<hash>/corgi` unless you name a folder. Then run
+`tools/rehash` and commit the result here. Only the files whose source
+changed differ.
