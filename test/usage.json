@@ -1,0 +1,440 @@
+{
+  "running": true,
+  "accounts": [
+    {
+      "provider": "codex",
+      "name": "",
+      "email": "you@example.com",
+      "plan": "Pro",
+      "metered": false,
+      "shared": [
+        {
+          "provider": "pi",
+          "name": ""
+        }
+      ],
+      "windows": [
+        {
+          "label": "7d",
+          "bars": [
+            {
+              "used": 5,
+              "tone": "accent"
+            },
+            {
+              "used": 12,
+              "tone": "accent"
+            },
+            {
+              "used": 20,
+              "tone": "accent"
+            },
+            {
+              "used": 31,
+              "tone": "accent"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            }
+          ],
+          "used": 31,
+          "figure": "31%",
+          "reset": "5d 2h"
+        },
+        {
+          "label": "5h",
+          "bars": [
+            {
+              "used": 3,
+              "tone": "accent"
+            },
+            {
+              "used": 8,
+              "tone": "accent"
+            },
+            {
+              "used": null,
+              "tone": "unread"
+            },
+            {
+              "used": 15,
+              "tone": "accent"
+            },
+            {
+              "used": 22,
+              "tone": "accent"
+            },
+            {
+              "used": 30,
+              "tone": "accent"
+            },
+            {
+              "used": 36,
+              "tone": "accent"
+            },
+            {
+              "used": 42,
+              "tone": "accent"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            }
+          ],
+          "used": 42,
+          "figure": "42%",
+          "reset": "2h 13m"
+        }
+      ],
+      "amount": ""
+    },
+    {
+      "provider": "claude",
+      "name": "",
+      "email": "you@example.com",
+      "plan": "Max",
+      "metered": false,
+      "shared": [],
+      "windows": [
+        {
+          "label": "7d",
+          "bars": [
+            {
+              "used": 10,
+              "tone": "accent"
+            },
+            {
+              "used": 18,
+              "tone": "accent"
+            },
+            {
+              "used": 27,
+              "tone": "accent"
+            },
+            {
+              "used": 35,
+              "tone": "accent"
+            },
+            {
+              "used": 44,
+              "tone": "accent"
+            },
+            {
+              "used": 52,
+              "tone": "accent"
+            },
+            {
+              "used": 61,
+              "tone": "accent"
+            },
+            {
+              "used": 70,
+              "tone": "accent"
+            },
+            {
+              "used": 79,
+              "tone": "accent"
+            },
+            {
+              "used": 86,
+              "tone": "warm"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            }
+          ],
+          "used": 86,
+          "figure": "86%",
+          "reset": "2d 4h"
+        },
+        {
+          "label": "5h",
+          "bars": [
+            {
+              "used": 6,
+              "tone": "accent"
+            },
+            {
+              "used": 14,
+              "tone": "accent"
+            },
+            {
+              "used": 22,
+              "tone": "accent"
+            },
+            {
+              "used": 31,
+              "tone": "accent"
+            },
+            {
+              "used": 40,
+              "tone": "accent"
+            },
+            {
+              "used": 48,
+              "tone": "accent"
+            },
+            {
+              "used": 57,
+              "tone": "accent"
+            },
+            {
+              "used": 66,
+              "tone": "accent"
+            },
+            {
+              "used": 74,
+              "tone": "accent"
+            },
+            {
+              "used": 83,
+              "tone": "warm"
+            },
+            {
+              "used": 91,
+              "tone": "warm"
+            },
+            {
+              "used": 97,
+              "tone": "warm"
+            },
+            {
+              "used": 100,
+              "tone": "hot"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            }
+          ],
+          "used": 100,
+          "figure": "100%",
+          "reset": "41m"
+        }
+      ],
+      "amount": ""
+    },
+    {
+      "provider": "codex",
+      "name": "acme",
+      "email": "dev@acme.example",
+      "plan": "Enterprise",
+      "metered": true,
+      "shared": [],
+      "windows": [
+        {
+          "label": "mo",
+          "bars": [
+            {
+              "used": 9,
+              "tone": "accent"
+            },
+            {
+              "used": 18,
+              "tone": "accent"
+            },
+            {
+              "used": 27,
+              "tone": "accent"
+            },
+            {
+              "used": 36,
+              "tone": "accent"
+            },
+            {
+              "used": 44,
+              "tone": "accent"
+            },
+            {
+              "used": 51,
+              "tone": "accent"
+            },
+            {
+              "used": 58,
+              "tone": "accent"
+            },
+            {
+              "used": 62,
+              "tone": "accent"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            }
+          ],
+          "used": 62,
+          "figure": "62%",
+          "reset": "20d"
+        },
+        null
+      ],
+      "amount": "⛁155k / ⛁250k"
+    },
+    {
+      "provider": "claude",
+      "name": "api",
+      "email": "",
+      "plan": "API",
+      "metered": true,
+      "shared": [],
+      "windows": [
+        {
+          "label": "mo",
+          "bars": [
+            {
+              "used": 12,
+              "tone": "accent"
+            },
+            {
+              "used": 20,
+              "tone": "accent"
+            },
+            {
+              "used": 31,
+              "tone": "accent"
+            },
+            {
+              "used": 38,
+              "tone": "accent"
+            },
+            {
+              "used": 52,
+              "tone": "accent"
+            },
+            {
+              "used": 61,
+              "tone": "accent"
+            },
+            {
+              "used": 70,
+              "tone": "accent"
+            },
+            {
+              "used": 84,
+              "tone": "accent"
+            },
+            {
+              "used": 100,
+              "tone": "accent"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            },
+            {
+              "used": null,
+              "tone": "remaining"
+            }
+          ],
+          "used": null,
+          "figure": "",
+          "reset": "18d"
+        },
+        null
+      ],
+      "amount": "$8.20"
+    }
+  ]
+}
