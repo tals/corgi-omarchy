@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import manifest from "../manifest.json";
 
-const script = join(import.meta.dir, "..", dirname(manifest.entryPoints.barWidget), "open_installer.sh");
+const script = join(import.meta.dir, "..", dirname(manifest.entryPoints.barWidget), "open_installer.ts");
 const trials: string[] = [];
 afterEach(async () => {
   await Promise.all(trials.splice(0).map(path => rm(path, { recursive: true, force: true })));
@@ -41,7 +41,7 @@ async function fixture() {
     plugin,
     checkout,
     async run(once = true, code = 0) {
-      const child = Bun.spawn(["bash", script, plugin, ...(once ? ["--once"] : [])], {
+      const child = Bun.spawn([process.execPath, script, plugin, ...(once ? ["--once"] : [])], {
         env: { ...env, LAUNCH_EXIT: String(code) },
         stdout: "pipe",
         stderr: "pipe",

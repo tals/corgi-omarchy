@@ -55,7 +55,7 @@ Panel {
   // Qt keeps compiled QML by path for the shell's life, and Omarchy's plugin
   // reload doesn't clear it. Run from a checkout, it sits in the plugin folder.
   readonly property string pluginDir: qmlDir.replace(/\/qml-[0-9a-f]{12}$/, "")
-  readonly property string openInstaller: qmlDir + "/open_installer.sh"
+  readonly property string openInstaller: qmlDir + "/open_installer.ts"
   // Where Corgi's installer puts it on every Linux, outside the plugin folder.
   readonly property string corgiRoot: (Quickshell.env("HOME") || "") + "/.local/share/corgi"
 
@@ -554,7 +554,7 @@ Panel {
   function install() {
     if (actionGuard.running) return
     actionGuard.restart()
-    Util.execArgv(["bash", root.openInstaller, root.pluginDir])
+    Util.execArgv(["bun", root.openInstaller, root.pluginDir])
     close()
   }
 
@@ -806,7 +806,7 @@ Panel {
     syncWatch()
     syncInstallWatch()
     Quickshell.execDetached(["mkdir", "-p", root.stateDir])
-    Util.execArgv(["bash", root.openInstaller, root.pluginDir, "--once"])
+    Util.execArgv(["bun", root.openInstaller, root.pluginDir, "--once"])
   }
 
   // Until Corgi is installed: waits, with inotify on the nearest folder that

@@ -9,7 +9,7 @@
   "license": "MIT",
   "kinds": ["bar-widget"],
   "entryPoints": {
-    "barWidget": "qml-5e40b1cb3d51/Widget.qml"
+    "barWidget": "qml-148c3219386b/Widget.qml"
   },
   "barWidget": {
     "displayName": "Corgi",

@@ -1,11 +1,16 @@
-import { afterEach, expect, test } from "bun:test";
+import { afterEach, beforeEach, expect, spyOn, test } from "bun:test";
 import { chmod, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
 import * as release from "../tools/release-plugin.ts";
 
 const trials: string[] = [];
+let logging: ReturnType<typeof spyOn>;
+beforeEach(() => {
+  logging = spyOn(console, "log").mockImplementation(() => {});
+});
 afterEach(async () => {
+  logging.mockRestore();
   await Promise.all(trials.splice(0).map(p => rm(p, { recursive: true, force: true })));
 });
 const git = (cwd: string, ...args: string[]) => release.run(cwd, ["git", ...args]);
