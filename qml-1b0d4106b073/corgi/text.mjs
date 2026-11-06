@@ -3,7 +3,7 @@ import { codepointWidths } from "./viewer_native.mjs";
 //! Text measurement and clipping as the Zig viewer does it: Ghostty's width
 //! per codepoint, byte lengths where Zig counts bytes. sidebar.zig keeps
 //! these helpers; the TypeScript viewer shares them from here.
-//! The Omarchy panel runs this in Qt's QML engine (tools/omarchy_motion.ts):
+//! The Omarchy panel runs this in Qt's QML engine (corgi-omarchy/tools/motion-build.ts):
 //! no BigInt literals or `Intl`, and builtins Qt lacks only through
 //! the Omarchy plugin's qml_shims.js.
 

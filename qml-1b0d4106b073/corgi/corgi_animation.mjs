@@ -5,7 +5,7 @@ import * as i18n from "./i18n.mjs";
 import { displayWidth, ellipsis } from "./text.mjs";
 //! Viewer-local corgi motion policies mirrored from corgi_animation.zig.
 //! The landing page bundles this module, so it uses only what browsers have.
-//! The Omarchy panel runs this in Qt's QML engine (tools/omarchy_motion.ts):
+//! The Omarchy panel runs this in Qt's QML engine (corgi-omarchy/tools/motion-build.ts):
 //! no BigInt literals or `Intl`, and builtins Qt lacks only through
 //! the Omarchy plugin's qml_shims.js.
 var golden = 2654435769;

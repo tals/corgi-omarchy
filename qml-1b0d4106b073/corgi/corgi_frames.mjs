@@ -1,5 +1,5 @@
 // src/corgi_frames.ts
-//! The Omarchy panel runs this in Qt's QML engine (tools/omarchy_motion.ts):
+//! The Omarchy panel runs this in Qt's QML engine (corgi-omarchy/tools/motion-build.ts):
 //! no BigInt literals or `Intl`, and builtins Qt lacks only through
 //! the Omarchy plugin's qml_shims.js.
 var asleep = "~ᐯ◡ᴥ◡ᐯ";
