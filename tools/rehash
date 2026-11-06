@@ -1,0 +1,31 @@
+#!/bin/bash
+# Names the plugin's QML folder for its content, qml-<hash>/, and points the
+# manifest at it. The shell keeps compiled QML by path for as long as it runs,
+# and Omarchy's plugin reload doesn't clear it, so only a path the shell has
+# never loaded brings new code without a restart. Run it after changing
+# anything in the folder, before committing; the harness fails while the
+# name is stale.
+#
+#   tools/rehash           rename the folder if its content changed
+#   tools/rehash --check   only say whether it did
+set -euo pipefail
+cd "$(dirname "$0")/.."
+entry=$(jq -r '.entryPoints.barWidget' manifest.json)
+dir=${entry%/*}
+if [[ ! $dir =~ ^qml-[0-9a-f]{12}$ || ! -d $dir ]]; then
+  echo "rehash: the manifest's entry, $entry, isn't in a qml-<hash>/ folder" >&2
+  exit 2
+fi
+sum() { if command -v sha256sum >/dev/null; then sha256sum; else shasum -a 256; fi; }
+# Each file's path in the folder, then its bytes, in path order.
+hash=$(cd "$dir" && find . -type f | sed 's|^\./||' | LC_ALL=C sort |
+  while IFS= read -r file; do printf '%s\0' "$file"; cat -- "$file"; done | sum | cut -c1-12)
+want=qml-$hash
+[[ $dir != "$want" ]] || exit 0
+if [[ ${1:-} == --check ]]; then
+  echo "rehash: $dir no longer matches its content; run tools/rehash" >&2
+  exit 1
+fi
+mv "$dir" "$want"
+sed -i.bak "s|\"$dir/|\"$want/|" manifest.json && rm -f manifest.json.bak
+echo "$dir -> $want"

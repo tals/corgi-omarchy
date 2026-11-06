@@ -1,0 +1,10 @@
+#!/bin/bash
+# Fake hyprctl: two windows, one the shell's own, so a process the shell
+# started (the fake watch, which stands in for a viewer) has a window through
+# its parent. Dispatches are logged.
+case "${1:-}" in
+  clients)
+    shell=$(ps -o ppid= -p "$(pgrep -n -f 'tail -n 1 -F')" 2>/dev/null | tr -d ' ')
+    printf '[{"pid":1,"address":"0xdead","focusHistoryID":0},{"pid":%s,"address":"0xc0991","focusHistoryID":1}]\n' "${shell:-0}" ;;
+  dispatch) echo "$*" >> /tmp/log/hyprctl.log ;;
+esac

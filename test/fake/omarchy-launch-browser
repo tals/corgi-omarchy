@@ -1,0 +1,2 @@
+#!/bin/bash
+{ printf 'browser'; printf ' [%s]' "$@"; printf '\n'; } >> /tmp/log/browser.log
