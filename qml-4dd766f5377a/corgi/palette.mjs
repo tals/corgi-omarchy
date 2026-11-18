@@ -14,7 +14,8 @@ var corgi = {
   strong: [238, 241, 244],
   accent: [123, 241, 168],
   warm: [229, 195, 139],
-  hot: [237, 163, 152]
+  hot: [237, 163, 152],
+  gold: [242, 196, 72]
 };
 var themes = {
   corgi: { label: "Corgi" },
@@ -162,7 +163,10 @@ derived(() => {
   syntax.punctuation = colors.muted;
 });
 function underline(token) {
-  return `\x1B[58:2::${colors[token].join(":")}m`;
+  return underlineRgb(colors[token]);
+}
+function underlineRgb(c) {
+  return `\x1B[58:2::${c.join(":")}m`;
 }
 function writeFg(writer, rgb) {
   writer.write(fgRgb(rgb));
@@ -207,6 +211,7 @@ export {
   termhtmlTheme,
   themes,
   underline,
+  underlineRgb,
   use,
   writeFg
 };

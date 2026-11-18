@@ -6,7 +6,7 @@
 set -eu
 
 base='https://corgi.computer'
-version='20261106T233845Z-03c72b717526'
+version='20261118T233021Z-b0372b94b434'
 root=${CORGI_INSTALL_ROOT:-$HOME/.local/share/corgi}
 bin=${CORGI_INSTALL_BIN:-$HOME/.local/bin/corgi}
 dir=$(dirname "$bin")
@@ -751,10 +751,10 @@ main() {
     *) printf '%s\n' "$(msg 'Usage: install.sh [uninstall | --no-omarchy]')" >&2; exit 2 ;;
   esac
   case "$(uname -s)-$(uname -m)" in
-    Darwin-arm64) target=macos-aarch64 platform='macOS arm64' expected='0269298484f2eeaef3816a24a078496eae47a52c87f468bc8584d55a599a350f' size=102801376 ;;
-    Linux-x86_64) target=linux-x86_64 platform='Linux amd64' expected='b9540fbc6ba387b5e9d3ebad5614746a16ea967e2d1c676b1e529a195ba21f03' size=138811568 ;;
+    Darwin-arm64) target=macos-aarch64 platform='macOS arm64' expected='c8e5820c5cd44aea66fb60d495dbd200ec04268246912010f283261ea84cd396' size=103577440 ;;
+    Linux-x86_64) target=linux-x86_64 platform='Linux amd64' expected='caa2d80e49c79fb714908898aec7c1d5419b06cd3758e5c66f7474ca1f42963d' size=139557040 ;;
     Linux-aarch64 | Linux-arm64)
-      target=linux-aarch64 platform='Linux arm64' expected='a3ac0628997609b00075e81ac17f00faea9c15b44640f455cc3625a8435159dd' size=138857464 ;;
+      target=linux-aarch64 platform='Linux arm64' expected='a42122d200cdc70b09ba7babb41e6d958960e6bc218c1c7146de469a296d053e' size=139578360 ;;
     *) printf '%s\n' "$(msg 'Corgi supports macOS arm64 and Linux amd64 and arm64.')" >&2; exit 1 ;;
   esac
   manifest=manifest.json

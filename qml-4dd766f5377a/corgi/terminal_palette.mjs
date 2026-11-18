@@ -12,12 +12,16 @@ var apart = 0.06;
 var families = { warm: [45, 125], hot: [330, 50] };
 function inFamily(name, hue) {
   const range = families[name];
-  if (!range)
-    return true;
+  return !range || within(range, hue);
+}
+function within(range, hue) {
   const h = (hue + 360) % 360;
   return range[0] <= range[1] ? h >= range[0] && h <= range[1] : h >= range[0] || h <= range[1];
 }
+var gold_hues = [70, 115];
+var gold_slots = [11, 3];
 function tokens(c) {
+  var _a;
   const terminal = c.background, dark = !light(c), extreme = dark ? [255, 255, 255] : [0, 0, 0], opposite = dark ? [0, 0, 0] : [255, 255, 255], clear = contrast(extreme, terminal) / keycap_room >= min_line, bg = clear ? terminal : reach(terminal, opposite, (g) => contrast(extreme, g) / keycap_room >= steps.line), scale = Math.log(Math.min(steps.line, contrast(extreme, bg) / keycap_room)) / Math.log(steps.line), ink = luminance(c.foreground) > luminance(bg) === dark ? c.foreground : extreme, text = reach(ink, extreme, (ground) => contrast(ground, bg) >= min_text), along = (to, target) => reach(bg, to, (ground) => contrast(ground, bg) >= target ** scale), surface = along(text, steps.surface), selected = along(text, steps.selected), line = along(text, steps.line), faint = reach(bg, text, (ink) => contrast(ink, surface) >= readable && contrast(ink, bg) >= readable), middle = Math.sqrt(contrast(faint, bg) * contrast(text, bg)), muted = reach(faint, text, (ink) => contrast(ink, bg) >= middle && contrast(ink, selected) >= readable), strong = reach(mixLab(text, extreme, 0.55), extreme, (ink) => contrast(ink, line) >= readable), status = statuses(c.ansi, [bg, surface, selected], extreme);
   return {
     colors: {
@@ -31,7 +35,8 @@ function tokens(c) {
       strong,
       accent: status.accent,
       warm: status.warm,
-      hot: status.hot
+      hot: status.hot,
+      gold: (_a = gold(c.ansi, [bg, surface, selected], extreme)) !== null && _a !== undefined ? _a : status.warm
     },
     clear
   };
@@ -55,7 +60,8 @@ function onBackground(own, background) {
     strong: keep(own.strong, [...grounds, line]),
     accent: keep(own.accent, grounds),
     warm: keep(own.warm, grounds),
-    hot: keep(own.hot, grounds)
+    hot: keep(own.hot, grounds),
+    gold: keep(own.gold, grounds)
   };
 }
 function supplied(ansi) {
@@ -85,6 +91,18 @@ function statuses(ansi, grounds, extreme) {
     chosen.push(pick);
   }
   return out;
+}
+function gold(ansi, grounds, extreme) {
+  const fits = (ink) => grounds.every((ground) => contrast(ink, ground) >= readable);
+  for (const slot of gold_slots) {
+    const color = ansi[slot];
+    if (!color)
+      continue;
+    const [, chroma, h] = lch(oklab(color));
+    if (chroma >= min_chroma && within(gold_hues, h))
+      return lift(color, extreme, fits).rgb;
+  }
+  return null;
 }
 function turn(color, hue, distinct, extreme, fits) {
   const [l, c, h] = lch(oklab(color)), way = Math.sign((hue - h + 540) % 360 - 180) || 1;
