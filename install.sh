@@ -6,7 +6,7 @@
 set -eu
 
 base='https://corgi.computer'
-version='20261118T233021Z-b0372b94b434'
+version='20261120T015223Z-cdce8d77d3f9'
 root=${CORGI_INSTALL_ROOT:-$HOME/.local/share/corgi}
 bin=${CORGI_INSTALL_BIN:-$HOME/.local/bin/corgi}
 dir=$(dirname "$bin")
@@ -418,7 +418,7 @@ install_corgi() {
 
   # Corgi verifies the signed manifest and installs itself, or stages itself over
   # an older installation for the next launch to activate.
-  fetch "$manifest" manifest.json
+  fetch manifest.json manifest.json
   chmod 700 "$tmp/corgi"
   "$tmp/corgi" __install "$root" "$tmp/manifest.json" </dev/null 2>"$tmp/error" ||
     fail "$(msg 'Could not install corgi: ${error}' "$(cat "$tmp/error")")"
@@ -751,14 +751,12 @@ main() {
     *) printf '%s\n' "$(msg 'Usage: install.sh [uninstall | --no-omarchy]')" >&2; exit 2 ;;
   esac
   case "$(uname -s)-$(uname -m)" in
-    Darwin-arm64) target=macos-aarch64 platform='macOS arm64' expected='c8e5820c5cd44aea66fb60d495dbd200ec04268246912010f283261ea84cd396' size=103577440 ;;
-    Linux-x86_64) target=linux-x86_64 platform='Linux amd64' expected='caa2d80e49c79fb714908898aec7c1d5419b06cd3758e5c66f7474ca1f42963d' size=139557040 ;;
+    Darwin-arm64) target=macos-aarch64 platform='macOS arm64' expected='96c73180c8dd2582d69056fafc388579cec2421128a17822e7b76fa907cf7871' size=103759072 ;;
+    Linux-x86_64) target=linux-x86_64 platform='Linux amd64' expected='7436d5cade3bd567d98e77ca7848a7a9a5e5a9b3e258813069af9aa26052ab44' size=139753648 ;;
     Linux-aarch64 | Linux-arm64)
-      target=linux-aarch64 platform='Linux arm64' expected='a42122d200cdc70b09ba7babb41e6d958960e6bc218c1c7146de469a296d053e' size=139578360 ;;
+      target=linux-aarch64 platform='Linux arm64' expected='1d221adba565507f4c92d43d12780c60b189bbb29ae5c929874e91651f17d6a9' size=139774968 ;;
     *) printf '%s\n' "$(msg 'Corgi supports macOS arm64 and Linux amd64 and arm64.')" >&2; exit 1 ;;
   esac
-  manifest=manifest.json
-  [ "$target" != linux-aarch64 ] || manifest=manifest-linux-aarch64.json
   if [ -n "$live" ]; then
     # Keys typed while it works would otherwise land in the progress line.
     tty_mode=$(stty -g </dev/tty)
