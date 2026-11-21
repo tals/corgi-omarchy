@@ -1,6 +1,7 @@
 pragma ComponentBehavior: Bound
 
 import QtQuick
+import QtQuick.Window
 import Quickshell
 import Quickshell.Io
 import qs.Commons
@@ -1037,10 +1038,30 @@ Panel {
       // Older Omarchy releases have no press feedback.
       scale: button.pressScale !== undefined ? button.pressScale : 1
 
+      // The corgi is a bitmap drawn 1:1, sharp only on whole device pixels,
+      // where an odd slot or the bar's layout may not put it. This moves the
+      // art, corgi and marks together, so the corgi's box lands on them.
+      readonly property real dpr: Screen.devicePixelRatio || 1
+      function whole(v) { return Math.round(v * dpr) / dpr }
+      transform: Translate { id: pixelSnap }
+      function snap() {
+        var p = button.mapToItem(null, x + (canvas - corgiIcon.paintedWidth) / 2,
+          y + (canvas - corgiIcon.paintedHeight) / 2)
+        pixelSnap.x = whole(p.x) - p.x
+        pixelSnap.y = whole(p.y) - p.y
+      }
+      // Nothing signals that the bar moved the widget, so this checks on each
+      // frame the bar draws. It changes only when the layout does.
+      Connections {
+        target: art.Window.window
+        function onAfterAnimating() { art.snap() }
+      }
+
       // With no marks the corgi sits centred in its lane-widened slot, and
       // slides aside as the first mark buds out, back as the last one goes.
-      // Without animation it stays aside, beside the empty dot.
-      property real shift: anyMark || !root.motion ? 0 : root.lane / 2
+      // Without animation it stays aside, beside the empty dot. Both ends are
+      // whole pixels, so it glides between them and lands sharp.
+      property real shift: anyMark || !root.motion ? 0 : whole(root.lane / 2)
       Behavior on shift {
         NumberAnimation {
           id: shiftAnimation
@@ -1051,12 +1072,14 @@ Panel {
       }
 
       // The corgi's edge on the marks' side, and where a mark's centre rests
-      // along the bar.
+      // along the bar. The head fills the square's width but only rows 3 to
+      // 61 of its 64 (CorgiIcon's ink).
+      readonly property real headHeight: corgiIcon.paintedHeight * 58 / 64
       readonly property real edge: vertical
-        ? corgiIcon.y + canvas / 2 + corgiIcon.paintedHeight / 2
+        ? corgiIcon.y + canvas / 2 + headHeight / 2
         : corgiIcon.x + canvas / 2 + corgiIcon.paintedWidth / 2
       readonly property real restMain: canvas / 2
-        + (vertical ? corgiIcon.paintedHeight : corgiIcon.paintedWidth) / 2 + root.markGap + root.markSize / 2
+        + (vertical ? headHeight : corgiIcon.paintedWidth) / 2 + root.markGap + root.markSize / 2
       readonly property real crossMiddle: canvas / 2
 
       // Two marks stack, the dot first; one sits level with the corgi.

@@ -16,10 +16,13 @@ import qs.Ui
 // (#2a2a2a paints as #545454), so it stays at 0 and the corgi takes the
 // colour exactly, matching the bar's glyphs.
 //
-// The clip rect is the head's own ink (alpha above 16) inside the PNG, so
-// the shell's icon sizing, which measures an image by its
-// painted box, scales the head itself to the icon size, as it does a glyph's
-// ink.
+// The PNG is decoded at the icon's size in device pixels and drawn 1:1. Left
+// to the GPU, a 64px image shrunk to twelve pixels blends in a smaller mipmap
+// level, and the two tones go soft. The box is the PNG's whole square rather
+// than the head's ink, so it is a whole number of pixels tall and the shell
+// centres it on whole pixels. The head spans the full width, so the shell's
+// icon sizing, which measures an image by its painted box, still scales the
+// head to the icon size. Widget.qml puts the box on whole device pixels.
 Item {
   id: root
 
@@ -30,20 +33,21 @@ Item {
   property bool installMark: false
   property color markColor: Commons.Color.accent
 
+  // The head's own ink (alpha above 16) inside the PNG's 64px square.
   readonly property rect ink: Qt.rect(0, 3, 64, 58)
 
   implicitWidth: iconSize
-  implicitHeight: iconSize * ink.height / ink.width
+  implicitHeight: iconSize
   width: implicitWidth
   height: implicitHeight
 
   Image {
     anchors.fill: parent
     source: Qt.resolvedUrl("corgi.png")
-    sourceClipRect: root.ink
+    sourceSize.width: Math.round(width * Screen.devicePixelRatio)
+    sourceSize.height: Math.round(height * Screen.devicePixelRatio)
     fillMode: Image.PreserveAspectFit
     smooth: true
-    mipmap: true
     layer.enabled: true
     layer.effect: MultiEffect {
       colorization: 1.0
@@ -59,6 +63,8 @@ Item {
     color: root.markColor
     anchors.right: parent.right
     anchors.bottom: parent.bottom
+    // On the head's bottom edge, not the square's.
+    anchors.bottomMargin: root.iconSize * (64 - root.ink.y - root.ink.height) / 64
     borderSpec: Border.flat(Commons.Color.popups.background, 1)
 
     // A down arrow: a stem and a head, drawn rather than set in a font so it

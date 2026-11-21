@@ -296,11 +296,12 @@ ShellRoot {
 
   function scrubs() {
     var pitch = (w.markSize + w.markSpacing) / 2
-    var lane = w.lane
+    // Where the corgi rests beside the empty lane, as the widget rounds it.
+    var aside = find(w, "corgiArt").whole(w.lane / 2)
     var idle = liveState("idle", "idle", "idle")
     var working = liveState("idle", "working", "idle")
     return [].concat(
-      scrubSequence({ name: "1-bud-working", ms: 250, play: [0, 1], via: {}, shift: [lane / 2, 0] },
+      scrubSequence({ name: "1-bud-working", ms: 250, play: [0, 1], via: {}, shift: [aside, 0] },
                     idle, working, function() { return w.workingMark }),
       scrubSequence({ name: "2-split-dot", ms: 250, dot: [0, 1], via: { dot: true },
                       attention: [0, -pitch], working: [0, pitch] },
@@ -308,10 +309,10 @@ ShellRoot {
       scrubSequence({ name: "3-merge-dot", ms: 170, dot: [1, 0], via: { dot: true },
                       attention: [-pitch, 0], working: [pitch, 0] },
                     liveState("ready", "working", "idle"), working, function() { return !w.attentionMark }),
-      scrubSequence({ name: "4-unbud-working", ms: 170, play: [1, 0], via: {}, shift: [0, lane / 2] },
+      scrubSequence({ name: "4-unbud-working", ms: 170, play: [1, 0], via: {}, shift: [0, aside] },
                     working, idle, function() { return !w.workingMark }),
       scrubSequence({ name: "5-bud-both", ms: 250, dot: [0, 1], play: [0, 1], via: {},
-                      attention: [0, -pitch], working: [0, pitch], shift: [lane / 2, 0] },
+                      attention: [0, -pitch], working: [0, pitch], shift: [aside, 0] },
                     idle, liveState("ready", "working", "idle"), function() { return w.workingMark && w.attentionMark }))
   }
 
